@@ -1,0 +1,23 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: report-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shobbe_report
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      table-underline: true
+      id-type: auto
+
+jwt:
+  access-secret: 3qvYc8T4vL1VYwKp8xZ2M6rQ9bNfD7uHcJkR5tP1eWmXg2ZsY8aC4vN7LqB0dFhKc2T9wE6rUjM5xPzA1sD3Gh8K0Q==

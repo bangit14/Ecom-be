@@ -1,0 +1,39 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: product-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shobbe_product?currentSchema=ecommerce_product
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    schemas: ecommerce_product
+    default-schema: ecommerce_product
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    create-schemas: true
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      table-underline: true
+      id-type: auto
+
+# MinIO Configuration
+minio:
+  endpoint: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin123
+  bucket: ecommerce-products
+  base-url: http://localhost:9000/ecommerce-products
+
+jwt:
+  access-secret: 3qvYc8T4vL1VYwKp8xZ2M6rQ9bNfD7uHcJkR5tP1eWmXg2ZsY8aC4vN7LqB0dFhKc2T9wE6rUjM5xPzA1sD3Gh8K0Q==

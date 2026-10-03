@@ -1,0 +1,59 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: shipment-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shobbe_shipment?currentSchema=ecommerce_shipment
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    schemas: ecommerce_shipment
+    default-schema: ecommerce_shipment
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    db-config:
+      id-type: auto
+      table-underline: true
+
+app:
+  rabbitmq:
+    exchange:
+      shipment: shobbe.shipment.exchange
+      dlx: shobbe.shipment.dlx
+    queues:
+      order-shipment:
+        name: shobbe.order.shipment.queue
+        routing-key: shobbe.order.shipment.key
+        dlq-name: shobbe.order.shipment.dlq
+        dlq-routing-key: shobbe.order.shipment.dlq.key
+      status-updated:
+        name: shobbe.shipment.status.queue
+        routing-key: shobbe.shipment.status.key
+        dlq-name: shobbe.shipment.status.dlq
+        dlq-routing-key: shobbe.shipment.status.dlq.key
+
+jwt:
+  access-secret: 3qvYc8T4vL1VYwKp8xZ2M6rQ9bNfD7uHcJkR5tP1eWmXg2ZsY8aC4vN7LqB0dFhKc2T9wE6rUjM5xPzA1sD3Gh8K0Q==
+
+ghn:
+  token-dev: ec9a4822-af6e-11f1-a973-aee5264794df
+  token-prod: 85e0404f-af6d-11f1-9e3e-dee7ea8e1ec3
+  url: https://dev-online-gateway.ghn.vn

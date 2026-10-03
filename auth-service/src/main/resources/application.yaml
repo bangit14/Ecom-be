@@ -1,0 +1,77 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: auth-service
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/shobbe_auth?currentSchema=public}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    schemas: public
+    default-schema: public
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:candyyeukoi10@gmail.com}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ""
+      database: 0
+      timeout: 2000ms
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:admin}
+    password: ${RABBITMQ_PASSWORD:admin}
+
+jwt:
+  access-secret: ${JWT_ACCESS_SECRET:3qvYc8T4vL1VYwKp8xZ2M6rQ9bNfD7uHcJkR5tP1eWmXg2ZsY8aC4vN7LqB0dFhKc2T9wE6rUjM5xPzA1sD3Gh8K0Q==}
+  refresh-secret: ${JWT_REFRESH_SECRET:7kLmP9qR2sT4vW1xY8zA3bC5dE7fG9hI1jK3mN5oP7qR9sT1uV3wX5yZ7aB9cD1e3fG5hI7jK9mN1oP3qR5sT7uV9wX1yZ3a}
+  access-expiration: ${JWT_ACCESS_EXPIRATION:3600000}
+  refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800}
+  issuer: ${JWT_ISSUER:ecommerce-auth-service}
+
+app:
+  rabbitmq:
+    exchange:
+      auth: ${RABBITMQ_AUTH_EXCHANGE:shobbe.auth.exchange}
+      dlx: ${RABBITMQ_AUTH_DLX:shobbe.auth.dlx}
+    queues:
+      registration:
+        name: ${RABBITMQ_REGISTRATION_QUEUE:shobbe.auth.registration.queue}
+        routing-key: ${RABBITMQ_REGISTRATION_ROUTING_KEY:shobbe.auth.registration.key}
+        dlq-name: ${RABBITMQ_REGISTRATION_DLQ:shobbe.auth.registration.dlq}
+        dlq-routing-key: ${RABBITMQ_REGISTRATION_DLQ_KEY:shobbe.auth.registration.dlq.key}
+
+
+
+
